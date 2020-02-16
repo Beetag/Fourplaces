@@ -13,23 +13,23 @@ namespace Fourplaces.ViewModel
         private string _eMail;
         private string _password;
 
-        public string eMail
+        public string Email
         {
             get => _eMail;
             set => SetProperty(ref _eMail, value);
         }
 
-        public string password
+        public string Password
         {
             get => _password;
             set => SetProperty(ref _password, value);
         }
-        public Command goToRegister { get; }
-        public Command login { get; } 
+        public Command GoToRegister { get; }
+        public Command Login { get; } 
 
         public MainPageViewModel() 
         {
-            login = new Command(connection_button_Clicked);
+            Login = new Command(connection_button_Clicked);
             //goToRegister = new Command(connection_button_Clicked);
         }
         private async void connection_button_Clicked()
@@ -44,7 +44,7 @@ namespace Fourplaces.ViewModel
 
             if (success)
             {
-                await navService.PushAsync(new ListPlaces());
+                await navService.PushAsync(new ListPlacesPage());
             }
         }
     }

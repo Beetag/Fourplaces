@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fourplaces.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,11 @@ using Xamarin.Forms.Xaml;
 namespace Fourplaces
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ListPlaces : ContentPage
+    public partial class ListPlacesPage : ContentPage
     {
-        public ListPlaces()
+        public ListPlacesPage()
         {
+            BindingContext = new ListPlacesViewModel();
             InitializeComponent();
         }
     }

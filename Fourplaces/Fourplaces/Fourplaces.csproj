@@ -19,18 +19,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\MainPage.xaml.cs">
+    <Compile Update="Views\ListPlacesPage.xaml.cs">
+      <DependentUpon>ListPlacesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="View\ListPlaces.xaml">
+    <EmbeddedResource Update="Views\ListPlacesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
 </Project>
