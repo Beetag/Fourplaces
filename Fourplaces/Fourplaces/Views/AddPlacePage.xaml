@@ -10,58 +10,60 @@
             <StackLayout
             Margin="40">
                 <Label
-                Text="Ajout d'un lieu"
-                FontSize="30"
-                HorizontalOptions="Center"
-                Margin="10"></Label>
+                    Text="Ajout d'un lieu"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Margin="10"></Label>
 
                 <Label
-                Text="Nom du lieu : "
-                FontSize="20"></Label>
+                    Text="Nom du lieu : "
+                    FontSize="20"></Label>
                 <Entry
-                Placeholder="La Tour Eiffel"
-                Text="{Binding Title}"></Entry>
+                    Placeholder="La Tour Eiffel"
+                    Text="{Binding Title}"></Entry>
 
                 <Label
-                Text="Description : "
-                FontSize="20"></Label>
+                    Text="Description : "
+                    FontSize="20"></Label>
                 <Entry
-                Placeholder="Monument parisien construit en 1887"
-                Text="{Binding Description}"></Entry>
+                    Placeholder="Monument parisien construit en 1887"
+                    Text="{Binding Description}"></Entry>
 
                 <Label
-                Text="Latitude : "
-                FontSize="20"></Label>
+                    Text="Latitude : "
+                    FontSize="20"></Label>
                 <Entry
-                Text="{Binding Latitude}"></Entry>
+                    Placeholder=" "
+                    Text="{Binding Latitude}"></Entry>
 
                 <Label
-                Text="Longitude : "
-                FontSize="20"></Label>
+                    Text="Longitude : "
+                    FontSize="20"></Label>
                 <Entry
-                Text="{Binding Longitude}"></Entry>
+                    Placeholder=" "
+                    Text="{Binding Longitude}"></Entry>
 
                 <StackLayout
-                Orientation="Vertical">
+                    Orientation="Vertical">
                     <Button
-                    Text="Prendre une photo"
-                    x:Name="takePhotoButton"></Button>
+                        Text="Prendre une photo"
+                        x:Name="takePhotoButton"></Button>
                     <Button
-                    Text="Choisir une image"
-                    x:Name="chooseImageButton"></Button>
+                        Text="Choisir une image"
+                        x:Name="chooseImageButton"></Button>
                     <StackLayout
-                    Orientation="Horizontal"
-                    HorizontalOptions="Center">
+                        Orientation="Horizontal"
+                        HorizontalOptions="Center">
                         <Label
-                        Text="Image choisie : "
-                        TextColor="Black"></Label>
+                            Text="Image choisie : "
+                            TextColor="Black"></Label>
                         <Label
-                        Text="{Binding SelectedImage}"></Label>
+                            Text="{Binding SelectedImage}"></Label>
                     </StackLayout>
                 </StackLayout>
                 <Button
-                Text="Valider"
-                Command="{Binding AddPlace}"></Button>
+                    Text="Valider"
+                    Command="{Binding AddPlace}"></Button>
             </StackLayout>
         </ScrollView>
         

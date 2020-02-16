@@ -15,8 +15,9 @@ namespace Fourplaces.ViewModels
         private string _title;
         private string _description;
         private int _image_id;
-        private double _latitude;
-        private double _longitude;
+        private string _latitude;
+        private string _longitude;
+        private string accessToken;
         public Command AddPlace { get; }
 
         public string Title
@@ -31,13 +32,13 @@ namespace Fourplaces.ViewModels
             set => SetProperty(ref _description, value);
         }
 
-        public double Latitude
+        public string Latitude
         {
             get => _latitude;
             set => SetProperty(ref _latitude, value);
         }
 
-        public double Longitude
+        public string Longitude
         {
             get => _longitude;
             set => SetProperty(ref _longitude, value);
@@ -46,34 +47,44 @@ namespace Fourplaces.ViewModels
         public AddPlaceViewModel()
         {
             AddPlace = new Command(AddNewPlace);
+            accessToken = App.Current.Properties["AccessToken"].ToString();
         }
 
         public async void AddNewPlace()
         {
-            try
+            if (!Title.Equals(""))
             {
-                ApiClient apiClient = new ApiClient();
-                HttpResponseMessage response = await apiClient.Execute(HttpMethod.Post, "https://td-api.julienmialon.com/places", new CreatePlaceRequest()
+                if (Latitude.Equals("") || Longitude.Equals(""))
+                try
                 {
-                    Title = _title,
-                    Description = _description,
-                    ImageId = 1,
-                    Latitude = _latitude,
-                    Longitude = _longitude
-                });
-                Response<CreatePlaceRequest> result = await apiClient.ReadFromResponse<Response<CreatePlaceRequest>>(response);
-                if (result.IsSuccess)
-                {
-                    Console.WriteLine(">>>>>>>>> Lieu ajouté");
+                    ApiClient apiClient = new ApiClient();
+                    HttpResponseMessage response = await apiClient.Execute(HttpMethod.Post, "https://td-api.julienmialon.com/places", new CreatePlaceRequest()
+                    {
+                        Title = _title,
+                        Description = _description,
+                        ImageId = 1,
+                        Latitude = Convert.ToDouble(_latitude),
+                        Longitude = Convert.ToDouble(_longitude)
+                    }, accessToken);
+                    Response<CreatePlaceRequest> result = await apiClient.ReadFromResponse<Response<CreatePlaceRequest>>(response);
+
+                    if (result.IsSuccess)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Succès", "Nouveau lieu ajouté", "Ok");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Erreur", result.ErrorMessage, "Ok");
+                    }
                 }
-                else 
+                catch (Exception e)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erreur", result.ErrorMessage, "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Erreur", e.Message, "Ok");
                 }
             }
-            catch (Exception e)
+            else
             {
-                await Application.Current.MainPage.DisplayAlert("Erreur", e.Message, "Ok");
+                await Application.Current.MainPage.DisplayAlert("Erreur", "Veuillez renseigner un nom", "Ok");
             }
         }
     }
