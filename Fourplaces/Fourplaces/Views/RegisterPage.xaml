@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Fourplaces.Views.RegisterPage">
+    <ContentPage.Content>
+        <StackLayout
+                Orientation="Vertical"
+                Margin="50">
+            <Label
+                    Text="Création de compte"
+                    FontSize="35"
+                    HorizontalOptions="Center">
+            </Label>
+
+            <Label
+                    Text="Email : "
+                    FontSize="20">
+            </Label>
+            <Entry
+                    Placeholder="example@gmail.com"
+                    Text="{Binding Email}">
+            </Entry>
+
+            <Label
+                    Text="Nom : "
+                    FontSize="20">
+            </Label>
+            <Entry
+                    Text="{Binding LastName}">
+            </Entry>
+
+            <Label
+                    Text="Prénom : "
+                    FontSize="20">
+            </Label>
+            <Entry
+                    Text="{Binding FirstName}">
+            </Entry>
+
+            <Label
+                    Text="Mot de passe : "
+                    FontSize="20">
+            </Label>
+            <Entry
+                    Placeholder="***************"
+                    IsPassword="True"
+                    Text="{Binding Password}">
+            </Entry>
+
+            <Button
+                    Text="Créer le compte"
+                    Command="{Binding ValidateRegistration}">
+            </Button>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

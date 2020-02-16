@@ -1,6 +1,8 @@
 ﻿using Common.Api.Dtos;
+using Fourplaces.Views;
 using Storm.Mvvm;
 using Storm.Mvvm.Services;
+using System;
 using System.Net.Http;
 using System.Text;
 using TD.Api.Dtos;
@@ -29,23 +31,40 @@ namespace Fourplaces.ViewModel
 
         public MainPageViewModel() 
         {
-            Login = new Command(connection_button_Clicked);
-            //goToRegister = new Command(connection_button_Clicked);
+            Login = new Command(login);
+            GoToRegister = new Command(register);
         }
-        private async void connection_button_Clicked()
+
+        private async void login()
         {
             INavigationService navService = DependencyService.Get<INavigationService>();
 
-            ApiClient apiClient = new ApiClient();
-            HttpResponseMessage response = await apiClient.Execute(HttpMethod.Post, "https://td-api.julienmialon.com/auth/login", new LoginRequest() { Email = _eMail, Password = _password });
-            Response<LoginResult> result = await apiClient.ReadFromResponse<Response<LoginResult>>(response);
-
-            bool success = result.IsSuccess;
-
-            if (success)
+            try
             {
-                await navService.PushAsync(new ListPlacesPage());
+                ApiClient apiClient = new ApiClient();
+                HttpResponseMessage response = await apiClient.Execute(HttpMethod.Post, "https://td-api.julienmialon.com/auth/login", new LoginRequest() { Email = _eMail, Password = _password });
+                Response<LoginResult> result = await apiClient.ReadFromResponse<Response<LoginResult>>(response);
+
+                bool success = result.IsSuccess;
+
+                if (success)
+                {
+                    await navService.PushAsync(new ListPlacesPage());
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erreur", "Identifiants invalides", "Ok");
+                }
             }
+            catch (Exception e)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erreur", e.Message, "Ok");
+            }
+        }
+
+        private async void register()
+        {
+            await DependencyService.Get<INavigationService>().PushAsync<RegisterPage>();
         }
     }
 }
