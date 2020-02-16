@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Fourplaces.Views.AddPlacePage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+            Margin="40">
+                <Label
+                Text="Ajout d'un lieu"
+                FontSize="30"
+                HorizontalOptions="Center"
+                Margin="10"></Label>
+
+                <Label
+                Text="Nom du lieu : "
+                FontSize="20"></Label>
+                <Entry
+                Placeholder="La Tour Eiffel"
+                Text="{Binding Title}"></Entry>
+
+                <Label
+                Text="Description : "
+                FontSize="20"></Label>
+                <Entry
+                Placeholder="Monument parisien construit en 1887"
+                Text="{Binding Description}"></Entry>
+
+                <Label
+                Text="Latitude : "
+                FontSize="20"></Label>
+                <Entry
+                Text="{Binding Latitude}"></Entry>
+
+                <Label
+                Text="Longitude : "
+                FontSize="20"></Label>
+                <Entry
+                Text="{Binding Longitude}"></Entry>
+
+                <StackLayout
+                Orientation="Vertical">
+                    <Button
+                    Text="Prendre une photo"
+                    x:Name="takePhotoButton"></Button>
+                    <Button
+                    Text="Choisir une image"
+                    x:Name="chooseImageButton"></Button>
+                    <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="Center">
+                        <Label
+                        Text="Image choisie : "
+                        TextColor="Black"></Label>
+                        <Label
+                        Text="{Binding SelectedImage}"></Label>
+                    </StackLayout>
+                </StackLayout>
+                <Button
+                Text="Valider"
+                Command="{Binding AddPlace}"></Button>
+            </StackLayout>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local1="clr-namespace:Fourplaces.Model"
+             xmlns:local="clr-namespace:Fourplaces.ViewModels"
+             mc:Ignorable="d"
+             x:Class="Fourplaces.Views.DetailsPlacePage">
+    <ContentPage.BindingContext>
+        <local:DetailsPlaceViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local1:IdToURLConverter x:Key="IdToURLConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <FlexLayout Direction="Column">
+            <StackLayout Orientation="Vertical" Padding="10,10,10,10">
+                <Label Text="{Binding Title}"  HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="Black"/>
+                <Image 
+                    Source="{Binding ImageId, Converter={StaticResource IdToURLConverter}}"
+                    WidthRequest="150"
+                    HeightRequest="150"/>
+            </StackLayout>
+            <StackLayout 
+                Orientation="Vertical" 
+                Padding="10,10,10,10">
+                <Label 
+                    Text="Description:" 
+                    FontSize="Medium" 
+                    TextColor="Black"/>
+                <Label 
+                    Text="{Binding Description}" 
+                    VerticalOptions="Center"
+                    TextColor="Black"/>
+                <Button 
+                    Text="Locate on a map" 
+                    Command="{Binding OpenMaps}"/>
+            </StackLayout>
+            <StackLayout Padding="10,10,10,10">
+                <ScrollView HeightRequest="250">
+                    <ListView 
+                        ItemsSource="{Binding ListComments}"
+                        HasUnevenRows="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell 
+                                    Height="100">
+                                    <StackLayout Margin="5,5,5,5">
+                                        <Label 
+                                            Text="{Binding Date}"/>
+                                        <Label 
+                                            Text="{Binding Text}"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+            </StackLayout>
+        </FlexLayout>
+    </ContentPage.Content>
+
+</ContentPage>

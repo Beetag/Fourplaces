@@ -11,7 +11,8 @@
                 Margin="50">
                 <Label
                     Text="Bienvenue"
-                    FontSize="50"
+                    FontSize="30"
+                    Margin="50"
                     HorizontalOptions="Center">
                 </Label>
         

@@ -1,5 +1,7 @@
 ﻿using Common.Api.Dtos;
+using Fourplaces.Views;
 using Storm.Mvvm;
+using Storm.Mvvm.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +18,7 @@ namespace Fourplaces.ViewModel
         private string _title;
         private string _image_id;
         private ObservableCollection<PlaceItemSummary> _listPlaceItemSummary;
-
+        private PlaceItemSummary _selectedPlaceItemSummary;
         public string Title
         {
             get => _title;
@@ -43,11 +45,26 @@ namespace Fourplaces.ViewModel
 
         }
 
+        public PlaceItemSummary SelectedPlaceItemSummary
+        {
+            get => _selectedPlaceItemSummary;
+            set
+            {
+                if (SetProperty(ref _selectedPlaceItemSummary, value) && value != null)
+                {
+                    GoToDetailsPage(value);
+                    SelectedPlaceItemSummary = null;
+                }
+            }
+        }
+
         public Command GetAllPlaces { get; }
+        public Command NewPlace { get; }
 
         public ListPlacesViewModel()
         {
             ListPlaceItemSummary = new ObservableCollection<PlaceItemSummary>();
+            NewPlace = new Command(CreateNewPlace);
             LoadAllPlaces();
         }
 
@@ -62,11 +79,33 @@ namespace Fourplaces.ViewModel
                 Console.WriteLine("Reussi");
                 ListPlaceItemSummary = result.Data;
             }
-            foreach(PlaceItemSummary placeItem in ListPlaceItemSummary)
-            {
-                Console.WriteLine("test : " + placeItem.Title);
+        }
 
+        private async void GoToDetailsPage(PlaceItemSummary placeItemSummary)
+        {
+            try
+            {
+                ApiClient apiClient = new ApiClient();
+                HttpResponseMessage httpResponse = await apiClient.Execute(HttpMethod.Get, "https://td-api.julienmialon.com/places/" + placeItemSummary.Id);
+                Response<PlaceItem> result = await apiClient.ReadFromResponse<Response<PlaceItem>>(httpResponse);
+
+                if (result.IsSuccess)
+                {
+                    Console.Write("Succes récupération");
+                    await DependencyService.Get<INavigationService>().PushAsync<DetailsPlacePage>(new Dictionary<string, object> {
+                        { "placeItem" , result.Data }
+                    });
+                }
             }
+            catch (Exception e)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erreur", e.Message, "Ok");
+            }
+        }
+
+        private async void CreateNewPlace()
+        {
+            await DependencyService.Get<INavigationService>().PushAsync<AddPlacePage>();
         }
     }
 }
