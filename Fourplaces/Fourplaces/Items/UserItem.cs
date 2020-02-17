@@ -17,6 +17,6 @@ namespace TD.Api.Dtos
         public string Email { get; set; }
         
         [JsonProperty("image_id")]
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
     }
 }

@@ -3,8 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Fourplaces.ViewModels"
              mc:Ignorable="d"
              x:Class="Fourplaces.Views.AddPlacePage">
+
+    <ContentPage.BindingContext>
+        <local:AddPlaceViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout
@@ -57,6 +62,16 @@
                         Text="Choisir une image"
                         Command="{Binding ChoosePicture}"></Button>
                 </StackLayout>
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="Center">
+                    <Label
+                        Text="Chemin de l'image :"
+                        TextColor="Black"></Label>
+                    <Label
+                        Text="{Binding ImagePath}"></Label>
+                </StackLayout>
+                
                 <Button
                     Text="Valider"
                     Margin="35"

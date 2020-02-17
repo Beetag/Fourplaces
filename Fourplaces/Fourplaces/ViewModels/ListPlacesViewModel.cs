@@ -1,5 +1,6 @@
 ﻿using Common.Api.Dtos;
 using Fourplaces.Views;
+using Plugin.Media;
 using Storm.Mvvm;
 using Storm.Mvvm.Services;
 using System;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using TD.Api.Dtos;
 using Xamarin.Forms;
 
@@ -18,19 +20,12 @@ namespace Fourplaces.ViewModel
     {
         private string accessToken;
         private string _title;
-        private string _image_id;
         private ObservableCollection<PlaceItemSummary> _listPlaceItemSummary;
         private PlaceItemSummary _selectedPlaceItemSummary;
         public string Title
         {
             get => _title;
             set => SetProperty(ref _title, value);
-        }
-
-        public string ImageId
-        {
-            get => _image_id;
-            set => SetProperty(ref _image_id, value);
         }
 
         public ObservableCollection<PlaceItemSummary> ListPlaceItemSummary
@@ -63,13 +58,16 @@ namespace Fourplaces.ViewModel
         public Command GetAllPlaces { get; }
         public Command NewPlace { get; }
         public Command GoToProfile { get; }
+        
 
         public ListPlacesViewModel()
         {
+            accessToken = App.Current.Properties["AccessToken"].ToString();
+
             ListPlaceItemSummary = new ObservableCollection<PlaceItemSummary>();
             NewPlace = new Command(CreateNewPlace);
             GoToProfile = new Command(GoToMyProfile);
-            accessToken = App.Current.Properties["AccessToken"].ToString();
+
             LoadAllPlaces();
         }
 
@@ -118,7 +116,13 @@ namespace Fourplaces.ViewModel
                 if (result.IsSuccess)
                 {
                     await DependencyService.Get<INavigationService>().PushAsync<ProfilePage>(new Dictionary<string, object> {
-                        { "userItem" , result.Data }
+                        { "userItem" , new UserItem() {
+                            LastName = result.Data.LastName,
+                            Email = result.Data.Email,
+                            FirstName = result.Data.FirstName,
+                            Id = result.Data.Id,
+                            ImageId = result.Data.ImageId == null ? 1 : result.Data.ImageId }
+                        }
                     });
                 }
             }

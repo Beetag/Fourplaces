@@ -57,7 +57,7 @@ namespace Fourplaces.ViewModels
                 FirstName = userItem.FirstName;
                 LastName = userItem.LastName;
                 Email = userItem.Email;
-                //ImageId = userItem.ImageId;
+                ImageId = (int)userItem.ImageId;
             }
         }
     }

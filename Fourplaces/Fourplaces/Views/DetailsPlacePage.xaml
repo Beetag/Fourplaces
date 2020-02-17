@@ -34,7 +34,7 @@
                     VerticalOptions="Center"
                     TextColor="Black"/>
                 <Button 
-                    Text="Locate on a map" 
+                    Text="Localiser sur la map" 
                     Command="{Binding OpenMaps}"/>
             </StackLayout>
             <StackLayout Padding="10,10,10,10">

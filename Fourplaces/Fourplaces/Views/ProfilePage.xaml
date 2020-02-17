@@ -13,6 +13,16 @@
     <ContentPage.Resources>
         <local1:IdToURLConverter x:Key="IdToURLConverter"/>
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            x:Name="add" 
+            Order="Primary"
+            Icon="edit.png"
+            Priority="0" 
+            Command="{Binding EditMode}"/>
+    </ContentPage.ToolbarItems>
+    
+
     <ContentPage.Content>
         <ScrollView>
             <StackLayout
