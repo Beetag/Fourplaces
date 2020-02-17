@@ -1,4 +1,5 @@
-﻿using Storm.Mvvm;
+﻿using Fourplaces.Views;
+using Storm.Mvvm;
 using Storm.Mvvm.Navigation;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,13 @@ namespace Fourplaces.ViewModels
         [NavigationParameter("userItem")]
 
         public UserItem userItem {get; set;}
+        public ProfilePage profilePage { get; set; }
 
         private string _firtstname;
         private string _lastname;
         private string _email;
+        private string _currentPassword;
+        private string _newPassword;
         private int _image_id;
 
         public string FirstName
@@ -44,9 +48,24 @@ namespace Fourplaces.ViewModels
             set => SetProperty(ref _image_id, value);
         }
 
+        public string CurrentPassword
+        {
+            get => _currentPassword;
+            set => SetProperty(ref _currentPassword, value);
+        }
+
+        public string NewPassword
+        {
+            get => _newPassword;
+            set => SetProperty(ref _newPassword, value);
+        }
+
+        public Command Validate { get; }
+        public Command EditMode { get; }
+
         public ProfileViewModel()
         {
-                        
+            EditMode = new Command(GoToEditMode);
         }
 
         public override void Initialize(Dictionary<string, object> navigationParameters)
@@ -59,6 +78,11 @@ namespace Fourplaces.ViewModels
                 Email = userItem.Email;
                 ImageId = (int)userItem.ImageId;
             }
+        }
+
+        private void GoToEditMode()
+        {
+            //((Entry)profilePage.FindByName("FirstName")).IsEnabled = !((Entry)profileView.FindByName("EmailEntry")).IsEnabled;
         }
     }
 }

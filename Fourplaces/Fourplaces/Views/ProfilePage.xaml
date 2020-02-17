@@ -22,26 +22,31 @@
             Command="{Binding EditMode}"/>
     </ContentPage.ToolbarItems>
     
-
     <ContentPage.Content>
         <ScrollView>
             <StackLayout
-            Margin="50">
+            Margin="20">
                 <Label
                     Text="Profil"
                     FontSize="30"
-                    HorizontalOptions="Center"
-                    Margin="10"></Label>
+                    HorizontalOptions="Center"></Label>
 
                 <Image 
                     Source="{Binding ImageId, Converter={StaticResource IdToURLConverter}}"
                     WidthRequest="150"
-                    HeightRequest="150"/>
+                    HeightRequest="100"/>
+
+                <Button
+                    x:Name="ChangeImageButton"
+                    Text="Changer l'image"
+                    IsVisible="False"
+                    Command="{Binding ChangeImage}"></Button>
 
                 <Label
                     Text="Prénom : "
                     FontSize="20"></Label>
                 <Entry
+                    x:Name="FirstNameEntry"
                     IsEnabled="False"
                     Text="{Binding FirstName}"></Entry>
 
@@ -49,6 +54,7 @@
                     Text="Nom : "
                     FontSize="20"></Label>
                 <Entry
+                    x:Name="LastNameEntry"
                     IsEnabled="False"
                     Text="{Binding LastName}"></Entry>
 
@@ -56,13 +62,32 @@
                     Text="Email : "
                     FontSize="20"></Label>
                 <Entry
+                    x:Name="EmailEntry"
                     IsEnabled="False"
                     Text="{Binding Email}"></Entry>
 
+                <Label
+                    Text="Mot de passe : "
+                    FontSize="20"></Label>
+                <Entry
+                    x:Name="CurrentPasswordEntry"
+                    IsEnabled="False"
+                    IsPassword="True"
+                    Text="{Binding CurrentPassword}"></Entry>
+
+                <Label
+                    Text="Nouveau mot de passe : "
+                    FontSize="20"></Label>
+                <Entry
+                    x:Name="NewPasswordEntry"
+                    IsEnabled="False"
+                    IsPassword="True"
+                    Text="{Binding NewPassword}"></Entry>
+
                 <Button
-                    Text="Modifier le mot de passe"
-                    Margin="35"
-                    Command="{Binding ModifyPassword}"></Button>
+                    Text="Valider"
+                    IsVisible="False"
+                    Command="{Binding Validate}"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
