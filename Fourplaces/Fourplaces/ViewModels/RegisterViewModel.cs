@@ -53,7 +53,6 @@ namespace Fourplaces.ViewModels
 
         public async void createAccount()
         {
-            Console.WriteLine("Triggered");
             INavigationService navService = DependencyService.Get<INavigationService>();
 
             try
@@ -63,11 +62,9 @@ namespace Fourplaces.ViewModels
                 Response<RegisterRequest> result = await apiClient.ReadFromResponse<Response<RegisterRequest>>(response);
 
                 bool success = result.IsSuccess;
-                Console.WriteLine("Booleen créé " + success);
                 if (success)
                 {
                     await navService.PopAsync();
-                    Console.WriteLine("Compte créé");
                 }
                 else
                 {

@@ -47,6 +47,9 @@
                 Text="Ajouter un lieu"
                 Command="{Binding NewPlace}">
             </Button>
+            <Button
+                Text="Accéder au profil"
+                Command="{Binding GoToProfile}"></Button>
         </StackLayout>
         
     </ContentPage.Content>

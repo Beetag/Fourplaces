@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local1="clr-namespace:Fourplaces.Model"
+             xmlns:local="clr-namespace:Fourplaces.ViewModels"
+             mc:Ignorable="d"
+             x:Class="Fourplaces.Views.ProfilePage">
+    <ContentPage.BindingContext>
+        <local:ProfileViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local1:IdToURLConverter x:Key="IdToURLConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout
+            Margin="50">
+                <Label
+                    Text="Profil"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Margin="10"></Label>
+
+                <Image 
+                    Source="{Binding ImageId, Converter={StaticResource IdToURLConverter}}"
+                    WidthRequest="150"
+                    HeightRequest="150"/>
+
+                <Label
+                    Text="Prénom : "
+                    FontSize="20"></Label>
+                <Entry
+                    IsEnabled="False"
+                    Text="{Binding FirstName}"></Entry>
+
+                <Label
+                    Text="Nom : "
+                    FontSize="20"></Label>
+                <Entry
+                    IsEnabled="False"
+                    Text="{Binding LastName}"></Entry>
+
+                <Label
+                    Text="Email : "
+                    FontSize="20"></Label>
+                <Entry
+                    IsEnabled="False"
+                    Text="{Binding Email}"></Entry>
+
+                <Button
+                    Text="Modifier le mot de passe"
+                    Margin="35"
+                    Command="{Binding ModifyPassword}"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

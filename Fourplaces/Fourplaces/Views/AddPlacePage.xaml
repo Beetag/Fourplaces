@@ -8,7 +8,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout
-            Margin="40">
+            Margin="10">
                 <Label
                     Text="Ajout d'un lieu"
                     FontSize="30"
@@ -43,26 +43,23 @@
                     Placeholder=" "
                     Text="{Binding Longitude}"></Entry>
 
+                <Button
+                    Text="Utiliser mes coordonnées"
+                    Command="{Binding UseMyCoordinates}"></Button>
+
                 <StackLayout
-                    Orientation="Vertical">
+                    Orientation="Horizontal"
+                    HorizontalOptions="Center">
                     <Button
                         Text="Prendre une photo"
-                        x:Name="takePhotoButton"></Button>
+                        Command="{Binding TakePhoto}"></Button>
                     <Button
                         Text="Choisir une image"
-                        x:Name="chooseImageButton"></Button>
-                    <StackLayout
-                        Orientation="Horizontal"
-                        HorizontalOptions="Center">
-                        <Label
-                            Text="Image choisie : "
-                            TextColor="Black"></Label>
-                        <Label
-                            Text="{Binding SelectedImage}"></Label>
-                    </StackLayout>
+                        Command="{Binding ChoosePicture}"></Button>
                 </StackLayout>
                 <Button
                     Text="Valider"
+                    Margin="35"
                     Command="{Binding AddPlace}"></Button>
             </StackLayout>
         </ScrollView>

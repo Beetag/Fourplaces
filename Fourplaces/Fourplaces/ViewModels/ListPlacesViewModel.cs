@@ -5,6 +5,7 @@ using Storm.Mvvm.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -15,6 +16,7 @@ namespace Fourplaces.ViewModel
 {
     public class ListPlacesViewModel : ViewModelBase
     {
+        private string accessToken;
         private string _title;
         private string _image_id;
         private ObservableCollection<PlaceItemSummary> _listPlaceItemSummary;
@@ -60,11 +62,14 @@ namespace Fourplaces.ViewModel
 
         public Command GetAllPlaces { get; }
         public Command NewPlace { get; }
+        public Command GoToProfile { get; }
 
         public ListPlacesViewModel()
         {
             ListPlaceItemSummary = new ObservableCollection<PlaceItemSummary>();
             NewPlace = new Command(CreateNewPlace);
+            GoToProfile = new Command(GoToMyProfile);
+            accessToken = App.Current.Properties["AccessToken"].ToString();
             LoadAllPlaces();
         }
 
@@ -76,7 +81,6 @@ namespace Fourplaces.ViewModel
 
             if (result.IsSuccess)
             {
-                Console.WriteLine("Reussi");
                 ListPlaceItemSummary = result.Data;
             }
         }
@@ -94,6 +98,27 @@ namespace Fourplaces.ViewModel
                     Console.Write("Succes récupération");
                     await DependencyService.Get<INavigationService>().PushAsync<DetailsPlacePage>(new Dictionary<string, object> {
                         { "placeItem" , result.Data }
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erreur", e.Message, "Ok");
+            }
+        }
+
+        private async void GoToMyProfile()
+        {
+            try
+            {
+                ApiClient apiClient = new ApiClient();
+                HttpResponseMessage httpResponse = await apiClient.Execute(HttpMethod.Get, "https://td-api.julienmialon.com/me", null, accessToken);
+                Response<UserItem> result = await apiClient.ReadFromResponse<Response<UserItem>>(httpResponse);
+
+                if (result.IsSuccess)
+                {
+                    await DependencyService.Get<INavigationService>().PushAsync<ProfilePage>(new Dictionary<string, object> {
+                        { "userItem" , result.Data }
                     });
                 }
             }
