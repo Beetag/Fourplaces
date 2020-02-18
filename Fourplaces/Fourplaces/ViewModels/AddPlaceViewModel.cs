@@ -119,7 +119,7 @@ namespace Fourplaces.ViewModels
             }
             catch (Exception e)
             {
-                await Application.Current.MainPage.DisplayAlert("Erreur", e.Message, "Ok");
+                Debug.WriteLine(e.Message);
             }
         }
 
@@ -233,8 +233,5 @@ namespace Fourplaces.ViewModels
             fileStream.Close();
             return buffer;
         }
-
-
-
     }
 }

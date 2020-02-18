@@ -17,6 +17,7 @@ namespace Fourplaces.Views
         {
             BindingContext = new ProfileViewModel();
             InitializeComponent();
+            ((ProfileViewModel)BindingContext).profilePage = this;
         }
     }
 }

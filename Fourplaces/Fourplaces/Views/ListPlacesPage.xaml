@@ -15,6 +15,14 @@
         <local1:IdToURLConverter x:Key="IdToURLConverter"/>
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Order="Primary"
+            Icon="profile.png"
+            Priority="0" 
+            Command="{Binding GoToProfile}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout>
             <ListView
@@ -47,9 +55,6 @@
                 Text="Ajouter un lieu"
                 Command="{Binding NewPlace}">
             </Button>
-            <Button
-                Text="Accéder au profil"
-                Command="{Binding GoToProfile}"></Button>
         </StackLayout>
         
     </ContentPage.Content>

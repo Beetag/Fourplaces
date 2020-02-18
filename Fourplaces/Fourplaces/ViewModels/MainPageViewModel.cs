@@ -50,6 +50,8 @@ namespace Fourplaces.ViewModel
                 if (success)
                 {
                     App.Current.Properties["AccessToken"] = result.Data.AccessToken;
+                    App.Current.Properties["CurrentPassword"] = _password;
+
                     await navService.PushAsync(new ListPlacesPage());
                 }
                 else

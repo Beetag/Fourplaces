@@ -20,6 +20,7 @@
                     HorizontalOptions="Center"
                     Margin="10"></Label>
 
+
                 <Label
                     Text="Nom du lieu : "
                     FontSize="20"></Label>

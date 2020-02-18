@@ -36,12 +36,33 @@
                     WidthRequest="150"
                     HeightRequest="100"/>
 
-                <Button
-                    x:Name="ChangeImageButton"
-                    Text="Changer l'image"
+                <StackLayout
+                    Orientation="Vertical"
                     IsVisible="False"
-                    Command="{Binding ChangeImage}"></Button>
+                    x:Name="ChangeImageLayout"
+                    VerticalOptions="Center">
 
+                    <Label
+                        Text="Chemin de l'image :"
+                        TextColor="Black"></Label>
+                    <Label
+                        Text="{Binding ImagePath}"></Label>
+
+                    <StackLayout
+                        Orientation="Horizontal"
+                        HorizontalOptions="Center">
+                        <Button
+                        Text="Gallerie"
+                        Command="{Binding ChoosePicture}"></Button>
+
+                        <Button
+                        Text="Appareil photo"
+                        Command="{Binding TakePhoto}">
+                        </Button>
+                    </StackLayout>
+                </StackLayout>
+                
+                
                 <Label
                     Text="Prénom : "
                     FontSize="20"></Label>
@@ -66,25 +87,29 @@
                     IsEnabled="False"
                     Text="{Binding Email}"></Entry>
 
-                <Label
-                    Text="Mot de passe : "
+                <StackLayout
+                    x:Name="PasswordsLayout"
+                    IsVisible="False">
+                    <Label
+                    Text="Mot de passe actuel : "
                     FontSize="20"></Label>
-                <Entry
+
+                    <Entry
                     x:Name="CurrentPasswordEntry"
-                    IsEnabled="False"
                     IsPassword="True"
                     Text="{Binding CurrentPassword}"></Entry>
 
-                <Label
+                    <Label
                     Text="Nouveau mot de passe : "
                     FontSize="20"></Label>
-                <Entry
+
+                    <Entry
                     x:Name="NewPasswordEntry"
-                    IsEnabled="False"
                     IsPassword="True"
                     Text="{Binding NewPassword}"></Entry>
-
+                </StackLayout>
                 <Button
+                    x:Name="ValidateButton"
                     Text="Valider"
                     IsVisible="False"
                     Command="{Binding Validate}"></Button>
