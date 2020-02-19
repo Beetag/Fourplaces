@@ -19,5 +19,11 @@ namespace Fourplaces
             BindingContext = new ListPlacesViewModel();
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            var listPlaceViewModel = BindingContext as ListPlacesViewModel;
+            listPlaceViewModel.LoadAllPlaces();
+        }
     }
 }

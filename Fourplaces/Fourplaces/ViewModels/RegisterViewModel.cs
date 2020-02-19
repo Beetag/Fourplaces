@@ -64,6 +64,7 @@ namespace Fourplaces.ViewModels
                 bool success = result.IsSuccess;
                 if (success)
                 {
+                    await Application.Current.MainPage.DisplayAlert("Succès", "Le compte a été créé", "Ok");
                     await navService.PopAsync();
                 }
                 else

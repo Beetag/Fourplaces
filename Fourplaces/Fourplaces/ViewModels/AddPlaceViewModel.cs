@@ -26,6 +26,8 @@ namespace Fourplaces.ViewModels
         private string _longitude;
         private string accessToken;
         private string _imagePath;
+        private int _image_id;
+
         public Command AddPlace { get; }
         public Command UseMyCoordinates { get; }
         public Command TakePhoto { get; }
@@ -64,6 +66,12 @@ namespace Fourplaces.ViewModels
             }
         }
 
+        public int ImageId
+        {
+            get => _image_id;
+            set => SetProperty(ref _image_id, value);
+        }
+
         public AddPlaceViewModel()
         {
             accessToken = App.Current.Properties["AccessToken"].ToString();
@@ -92,35 +100,43 @@ namespace Fourplaces.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Erreur", "Veuillez choisir une image pour le lieu", "Ok");
             }
-
-            try
+            else
             {
-                ApiClient apiClient = new ApiClient();
-                int idImage = await SendNewImage(apiClient);
-                HttpResponseMessage response = await apiClient.Execute(HttpMethod.Post, "https://td-api.julienmialon.com/places", new CreatePlaceRequest()
+                try
                 {
-                    Title = _title,
-                    Description = _description,
-                    ImageId = idImage,
-                    Latitude = double.Parse(_latitude),
-                    Longitude = double.Parse(_longitude)
-                }, accessToken);
-                Response<CreatePlaceRequest> result = await apiClient.ReadFromResponse<Response<CreatePlaceRequest>>(response);
+                    if (_imagePath != null && _imagePath != " ")
+                    {
+                        ImageId = await SendNewImage();
+                    }
+                    ApiClient apiClient = new ApiClient();
+                    int idImage = await SendNewImage();
+                    HttpResponseMessage response = await apiClient.Execute(HttpMethod.Post, "https://td-api.julienmialon.com/places", new CreatePlaceRequest()
+                    {
+                        Title = _title,
+                        Description = _description,
+                        ImageId = idImage,
+                        Latitude = double.Parse(_latitude),
+                        Longitude = double.Parse(_longitude)
+                    }, accessToken);
+                    Response<CreatePlaceRequest> result = await apiClient.ReadFromResponse<Response<CreatePlaceRequest>>(response);
 
-                if (result.IsSuccess)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Succès", "Nouveau lieu ajouté", "Ok");
-                    await DependencyService.Get<INavigationService>().PopAsync();
+                    if (result.IsSuccess)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Succès", "Nouveau lieu ajouté", "Ok");
+                        await DependencyService.Get<INavigationService>().PopAsync();
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Erreur", result.ErrorMessage, "Ok");
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erreur", result.ErrorMessage, "Ok");
+                    Debug.WriteLine(e.Message);
                 }
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
+
+            
         }
 
         private async void GetMyCoordinates(object obj)
@@ -195,9 +211,9 @@ namespace Fourplaces.ViewModels
             ImagePath = photo.Path;
         }
 
-        private async Task<int> SendNewImage(ApiClient apiClient)
+        private async Task<int> SendNewImage()
         {
-
+            ApiClient apiClient = new ApiClient();
             HttpClient client = new HttpClient();
             byte[] imageData = FromImageToBinary(ImagePath);
 

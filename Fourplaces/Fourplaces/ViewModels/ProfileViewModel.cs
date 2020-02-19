@@ -34,7 +34,6 @@ namespace Fourplaces.ViewModels
         private string _imagePath;
 
         private string accessToken;
-        private string originalPassword;
 
         public string FirstName
         {
@@ -89,7 +88,6 @@ namespace Fourplaces.ViewModels
         public ProfileViewModel()
         {
             accessToken = App.Current.Properties["AccessToken"].ToString();
-            originalPassword = App.Current.Properties["CurrentPassword"].ToString();
 
             EditMode = new Command(GoToEditMode);
             Validate = new Command(UpdateProfile);
@@ -122,9 +120,10 @@ namespace Fourplaces.ViewModels
         {
             try
             {
-                if (_imagePath != null && _imagePath != " ")
+                if (_imagePath != null && _imagePath != "")
                 {
                     ImageId = await SendNewImage();
+                    _imagePath = "";
                 }
 
                 //Maj des informations de base du profil
@@ -152,9 +151,8 @@ namespace Fourplaces.ViewModels
                 //Maj du mot de passe
                 if ((!CurrentPassword.Equals(" ") || CurrentPassword != null) && (!NewPassword.Equals(" ") || NewPassword != null))
                 {
-                    if (CurrentPassword == originalPassword && CurrentPassword != NewPassword)
+                    if (CurrentPassword == App.Current.Properties["CurrentPassword"].ToString() && CurrentPassword != NewPassword)
                     {
-                        Console.WriteLine("Ils sont égaux");
                         ApiClient apiClient = new ApiClient();
                         HttpResponseMessage response = await apiClient.Execute(new HttpMethod("PATCH"), "https://td-api.julienmialon.com/me/password", new UpdatePasswordRequest()
                         {
@@ -166,7 +164,7 @@ namespace Fourplaces.ViewModels
                         if (result.IsSuccess)
                         {
                             await Application.Current.MainPage.DisplayAlert("Succès", "Mot de passe mis à jour", "Ok");
-                            App.Current.Properties["CurrentPassword"] = _newPassword;
+                            App.Current.Properties["CurrentPassword"] = NewPassword;
                             ((Entry)profilePage.FindByName("CurrentPasswordEntry")).Text = "";
                             ((Entry)profilePage.FindByName("NewPasswordEntry")).Text = "";
                         }

@@ -13,6 +13,14 @@
     <ContentPage.Resources>
         <local1:IdToURLConverter x:Key="IdToURLConverter"/>
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            x:Name="add" 
+            Order="Primary"
+            Icon="comment.png"
+            Priority="0" 
+            Command="{Binding AddComment}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <FlexLayout Direction="Column">
             <StackLayout Orientation="Vertical" Padding="10,10,10,10">

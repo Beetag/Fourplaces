@@ -4,12 +4,16 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Fourplaces.ViewModels"
+             xmlns:local1="clr-namespace:Fourplaces.Model"
              mc:Ignorable="d"
              x:Class="Fourplaces.Views.AddPlacePage">
 
     <ContentPage.BindingContext>
         <local:AddPlaceViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <local1:IdToURLConverter x:Key="IdToURLConverter"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout
@@ -19,7 +23,6 @@
                     FontSize="30"
                     HorizontalOptions="Center"
                     Margin="10"></Label>
-
 
                 <Label
                     Text="Nom du lieu : "
@@ -64,13 +67,18 @@
                         Command="{Binding ChoosePicture}"></Button>
                 </StackLayout>
                 <StackLayout
-                    Orientation="Horizontal"
-                    HorizontalOptions="Center">
+                    Orientation="Vertical"
+                    HorizontalOptions="CenterAndExpand">
                     <Label
                         Text="Chemin de l'image :"
                         TextColor="Black"></Label>
                     <Label
                         Text="{Binding ImagePath}"></Label>
+
+                    <Image 
+                        Source="{Binding ImageId, Converter={StaticResource IdToURLConverter}}"
+                        WidthRequest="150"
+                        HeightRequest="50"/>
                 </StackLayout>
                 
                 <Button

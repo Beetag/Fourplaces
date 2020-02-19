@@ -44,9 +44,11 @@
 
                     <Label
                         Text="Chemin de l'image :"
+                        IsVisible="false"
                         TextColor="Black"></Label>
                     <Label
-                        Text="{Binding ImagePath}"></Label>
+                        Text="{Binding ImagePath}"
+                        IsVisible="false"></Label>
 
                     <StackLayout
                         Orientation="Horizontal"

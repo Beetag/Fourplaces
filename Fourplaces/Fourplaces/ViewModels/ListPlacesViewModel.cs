@@ -71,7 +71,7 @@ namespace Fourplaces.ViewModel
             LoadAllPlaces();
         }
 
-        private async void LoadAllPlaces()
+        public async void LoadAllPlaces()
         {
             ApiClient apiClient = new ApiClient();
             HttpResponseMessage response = await apiClient.Execute(HttpMethod.Get, "https://td-api.julienmialon.com/places");
@@ -93,7 +93,7 @@ namespace Fourplaces.ViewModel
 
                 if (result.IsSuccess)
                 {
-                    Console.Write("Succes récupération");
+                    //Console.Write("Succes récupération");
                     await DependencyService.Get<INavigationService>().PushAsync<DetailsPlacePage>(new Dictionary<string, object> {
                         { "placeItem" , result.Data }
                     });
